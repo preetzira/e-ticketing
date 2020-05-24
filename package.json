@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./index.js",
-    "build": "npm run build --prefix client",
-    "deploy": "npm start && npm run build",
+    "deploy": "npm run build --prefix client && npm start",
     "dev-server": "nodemon -L --exec babel-node ./index.js",
     "dev-client": "npm start --prefix client",
     "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\" 'npm watch'"
@@ -63,10 +62,8 @@
     "express": "^4.17.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
-    "netlify-lambda": "^1.6.3",
     "nodemon": "^2.0.3",
-    "prettier": "^2.0.5",
-    "serverless-http": "^2.5.0"
+    "prettier": "^2.0.5"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.7",

@@ -6,7 +6,6 @@ import express, { response } from "express"
 import helmet from "helmet"
 import "./db/connect"
 import jwt from "jsonwebtoken"
-import serverless from "serverless-http"
 
 const userRoutes = require("./routes/userRoutes")()
 const adminRoutes = require("./routes/adminRoutes")()
@@ -14,7 +13,6 @@ const commonRoutes = require("./routes/commonRoutes")()
 
 const router = express.Router()
 const app = express()
-module.exports.handler = serverless(app)
 app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
