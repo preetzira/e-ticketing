@@ -131,9 +131,10 @@ export const updateRoute = (data, history) => {
   }
 }
 
-export const fetchRoutes = ({from, to}) => {
+export const fetchRoutes = ({from = null, to = null} = {}) => {
+  const url = `/v1/routes/?from=${from}&to=${to}`
   return (dispatch) => {
-    fetch('/v1/routes')
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         dispatch({

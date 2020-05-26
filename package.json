@@ -5,11 +5,11 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./index.js",
-    "deploy": "npm run build --prefix client && npm start",
     "dev-server": "nodemon -L --exec babel-node ./index.js",
     "dev-client": "npm start --prefix client",
-    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\" 'npm watch'"
+    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\" 'npm watch'",
+    "build": "rimraf dist/ && npx babel ./ --out-dir dist/ --ignore ./client,./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files --include-dotfiles",
+    "start": "npm run build && node dist/index.js NODE_ENV=production"
   },
   "husky": {
     "hooks": {
@@ -63,7 +63,8 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
     "nodemon": "^2.0.3",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.7",

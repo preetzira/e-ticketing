@@ -41,10 +41,11 @@ export default class CommonController {
   }
 
   static async createRoute(req, res) {
+    console.log(req.body)
     try {
-      const { from = "", to = "", pricing = {}, timings = [] } = req.body
+      const { from = "", to = "", pricing = {}, trains = [] } = req.body
       const errors = {}
-      if (!from || !to || !train_id || !Object.keys(pricing).length) {
+      if (!from || !to || !trains.length || !Object.keys(pricing).length) {
         errors.params =
           "Missing Params!, You must specify all the required parameters"
       }
@@ -56,7 +57,7 @@ export default class CommonController {
       const insertResult = await routesDAO.addRoute({
         from,
         to,
-        train_id,
+        trains,
         pricing,
       })
       if (!insertResult.success) {
@@ -68,6 +69,7 @@ export default class CommonController {
         flag: 143,
       })
     } catch (e) {
+      console.log(e)
       return res.send({ error: e })
     }
   }
@@ -134,7 +136,6 @@ export default class CommonController {
 
   static async getCities(req, res) {
     try {
-      console.log(req.cookies, req.signedCookies)
       const data = await citiesDAO.getCities()
       return res.send(data)
     } catch (e) {
@@ -151,6 +152,7 @@ export default class CommonController {
       return res.send({ error: e })
     }
   }
+
   static async getTrains(req, res) {
     try {
       const data = await trainsDAO.getTrains()
@@ -159,6 +161,7 @@ export default class CommonController {
       return res.send({ error: e })
     }
   }
+
   static async getLoginStatus(req, res) {
     try {
       if (req.isAuthenticated()) {

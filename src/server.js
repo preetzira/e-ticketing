@@ -42,7 +42,6 @@ app.use(function (req, res, next) {
         req.isAuthenticated = () => true
       },
     )
-
     if (verification?.error) {
       return res.send({ error: verification.error })
     }
@@ -50,8 +49,8 @@ app.use(function (req, res, next) {
   next()
 })
 
-const BUILD_DIR = path.resolve(__dirname, "client", "build")
-app.use(express.static(BUILD_DIR))
+const BUILD_DIR = path.resolve("dist", "client", "build")
+app.use("/",express.static(BUILD_DIR))
 
 adminRoutes.setupRouting(router)
 userRoutes.setupRouting(router)
@@ -60,7 +59,7 @@ commonRoutes.setupRouting(router)
 app.use("/v1", router)
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve("client", "build", "index.html"))
+  res.sendFile(path.resolve("dist", "client", "build", "index.html"))
 })
 
 export default app

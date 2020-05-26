@@ -84,56 +84,8 @@ export const logout = (history) => {
   }
 }
 
-export const createRoute = (data, history) => {
-  return (dispatch) => {
-    fetch(`/v1/routes/create`, {
-      method: 'post',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({...data}),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        if (Object.prototype.hasOwnProperty.call(data, 'errors')) {
-          alert(JSON.stringify(data))
-          return
-        }
-        history.push('/routes')
-      })
-  }
-}
-
-export const updateRoute = (data, history) => {
-  return (dispatch) => {
-    fetch(`/v1/routes/update`, {
-      method: 'put',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({...data}),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        if (Object.prototype.hasOwnProperty.call(data, 'errors')) {
-          alert(JSON.stringify(data))
-          return
-        }
-        dispatch({
-          type: LOGIN_USER,
-          payload: data,
-        })
-        history.push('/routes')
-      })
-  }
-}
-
-export const fetchRoutes = ({from, to}) => {
-  const url = new URL('/v1/routes')
-  from && url.searchParams.append('from', from)
-  to && url.searchParams.append('to', to)
+export const fetchRoutes = ({from = null, to = null} = {}) => {
+  const url = `/v1/routes/?from=${from}&to=${to}`
   return (dispatch) => {
     fetch(url)
       .then((res) => res.json())

@@ -26,6 +26,11 @@ export default function (initialState = state, action) {
         ...initialState,
         trains: action.payload,
       }
+    case FETCH_ROUTES:
+      return {
+        ...initialState,
+        routes: action.payload,
+      }
     default:
       return initialState
   }

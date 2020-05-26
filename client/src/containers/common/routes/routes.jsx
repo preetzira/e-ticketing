@@ -18,6 +18,7 @@ class Routes extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
+    console.log({props, state})
     if (props.routes.length !== state.routes.length) {
       return {
         ...state,
@@ -32,25 +33,28 @@ class Routes extends React.Component {
   }
 
   render() {
-    return (
-      <>
+
+    return this.state.routes.length ? (
+      <div className="container" style={{marginTop:"20px"}}>
         <ul>
           {this.state.routes.map((route) => (
             <>
               <li>From {route.from}</li>
               <li>To {route.to}</li>
-              <li>
-                train:{' '}
-                {JSON.stringify(route.train, [
+              {/* <li>
+                trains:{' '}
+                {JSON.stringify(route.trains, [
                   'name',
                   'running_days',
                   'available_classes',
                 ])}
-              </li>
+              </li> */}
               <li>
                 pricing:{' '}
-                {JSON.stringify(route.train, (key, value) => {
-                  if (key === 'train') return null
+                {JSON.stringify(route.pricing, (key, value) => {
+                  if (key === '_id') {
+                    return null
+                  }
                   return value
                 })}
               </li>
@@ -58,13 +62,13 @@ class Routes extends React.Component {
           ))}
         </ul>
         <br />
-        <Link to="/">back</Link>
-      </>
-    )
+        <Link className="waves-effect blue darken-4 waves-light btn-large" to="/">back</Link>
+      </div>
+    ) : 'Loading'
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => (console.error(state),{
   routes: state[state.common.userType].routes,
 })
 

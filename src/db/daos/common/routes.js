@@ -36,9 +36,8 @@ export default class routesDAO {
    * @return {DAOResponse} Returns either a "success" or an "error" Object
    */
   static async addRoute(routeInfo) {
-    const { name, stations } = routeInfo
     try {
-      await routes.insertOne({ name, stations }, { w: "majority" })
+      await routes.insertOne({ ...routeInfo }, { w: "majority" })
       return { success: true }
     } catch (e) {
       if (String(e).startsWith("MongoError: E11000 duplicate key error")) {
